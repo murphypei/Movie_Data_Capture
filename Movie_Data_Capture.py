@@ -1,27 +1,27 @@
 import argparse
 import json
 import os
+import platform
 import random
 import re
-import sys
-import time
 import shutil
-import typing
-import urllib3
 import signal
-import platform
-import config
+import sys
 import threading
-
+import time
+import typing
 from datetime import datetime, timedelta
-from lxml import etree
 from pathlib import Path
+
+import urllib3
+from lxml import etree
 from opencc import OpenCC
 
-from scraper import get_data_from_json
+import config
 from ADC_function import file_modification_days, get_html, parallel_download_files
+from core import core_main, core_main_no_net_op, debug_print, moveFailedFolder
 from number_parser import get_number
-from core import core_main, core_main_no_net_op, moveFailedFolder, debug_print
+from scraper import get_data_from_json
 
 
 def check_update(local_version):
@@ -561,7 +561,7 @@ def main(args: tuple) -> Path:
 
     if conf.update_check():
         try:
-            check_update(version)
+            # check_update(version)
             # Download Mapping Table, parallel version
             def fmd(f) -> typing.Tuple[str, Path]:
                 return ('https://raw.githubusercontent.com/yoshiko2/Movie_Data_Capture/master/MappingTable/' + f,

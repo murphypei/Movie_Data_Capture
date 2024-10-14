@@ -2,16 +2,18 @@ import os.path
 import pathlib
 import shutil
 import sys
+from datetime import datetime
+from io import BytesIO
 
 from PIL import Image
-from io import BytesIO
-from datetime import datetime
-# from videoprops import get_video_properties
 
 from ADC_function import *
-from scraper import get_data_from_json
-from number_parser import is_uncensored
 from ImageProcessing import cutImage
+from number_parser import is_uncensored
+from scraper import get_data_from_json
+
+# from videoprops import get_video_properties
+
 
 
 # from WebCrawler import get_data_from_json
@@ -574,7 +576,7 @@ def add_to_pic(pic_path, img_pic, size, count, mode):
     img_subt = Image.open(mark_pic_path)
     scroll_high = int(img_pic.height / size)
     scroll_wide = int(scroll_high * img_subt.width / img_subt.height)
-    img_subt = img_subt.resize((scroll_wide, scroll_high), Image.ANTIALIAS)
+    img_subt = img_subt.resize((scroll_wide, scroll_high), Image.LANCZOS)
     r, g, b, a = img_subt.split()  # 获取颜色通道，保持png的透明性
     # 封面四个角的位置
     pos = [
